@@ -16,7 +16,7 @@ services:
       - app
 
   app:
-    image: slavoutich/nextcloud-fpm:13.0.1.0
+    image: slavoutich/nextcloud-fpm:latest
     restart: always
     mem_limit: 2048M
     expose:
