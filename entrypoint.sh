@@ -59,7 +59,16 @@ if version_greater "$image_version" "$installed_version"; then
     fi
 fi
 
-su -c "aria2c --enable-rpc --rpc-allow-origin-all -c -D --check-certificate=false --save-session=/var/local/aria2c.sess --save-session-interval=2 --continue=true --input-file=/var/local/aria2c.sess --rpc-save-upload-metadata=true --force-save=true --log-level=warn" -s /bin/sh www-data
-
+ARIA2C_SESSION_FILE="/var/www/html/data/aria2c.session"
+su -c "[[ -e \"${ARIA2C_SESSION_FILE}\" ]] || touch \"${ARIA2C_SESSION_FILE}\"" -s /bin/sh www-data
+su -c "aria2c --enable-rpc --rpc-allow-origin-all -c -D \
+    --check-certificate=false \
+    --save-session=${ARIA2C_SESSION_FILE} \
+    --save-session-interval=2 \
+    --continue=true \
+    --input-file=${ARIA2C_SESSION_FILE} \
+    --rpc-save-upload-metadata=true \
+    --force-save=true \
+    --log=- --log-level=warn" -s /bin/sh www-data
 
 exec "$@"
