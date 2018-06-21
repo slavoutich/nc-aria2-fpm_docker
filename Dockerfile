@@ -1,4 +1,4 @@
-FROM nextcloud:13.0.2-fpm-alpine
+FROM nextcloud:13.0.4-fpm-alpine
 
 RUN apk add --no-cache aria2
 
